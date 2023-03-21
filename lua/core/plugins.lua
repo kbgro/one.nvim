@@ -137,6 +137,54 @@ local plugins = {
       "leoluz/nvim-dap-go",
     },
   },
+
+  {
+    "L3MON4D3/LuaSnip",
+    -- install jsregexp (optional!).
+    build = "make install_jsregexp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+  },
+
+  -- auto pairs
+  {
+    "echasnovski/mini.pairs",
+    event = "VeryLazy",
+    config = function()
+      require("mini.pairs").setup(opts)
+    end,
+  },
+
+  -- surround
+  {
+    "echasnovski/mini.surround",
+    config = function()
+      -- use gz mappings instead of s to prevent conflict with leap
+      require("mini.surround").setup(opts)
+    end,
+  },
+
+  -- better text-objects
+  {
+    "echasnovski/mini.ai",
+    -- keys = {
+    --   { "a", mode = { "x", "o" } },
+    --   { "i", mode = { "x", "o" } },
+    -- },
+    event = "VeryLazy",
+    dependencies = { "nvim-treesitter-textobjects" },
+    config = function()
+      require("mini.ai").setup(opts)
+      -- register all text objects with which-key
+    end,
+  },
+
+  -- animate
+  {
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+  },
 }
 
 require("lazy").setup(plugins, opts)
