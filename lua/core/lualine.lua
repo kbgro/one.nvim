@@ -1,35 +1,36 @@
 local lualine = require "lualine"
 local icons = require "core.icons"
 
-local hide_in_width = function()
-  return vim.fn.winwidth(0) > 80
-end
-
 local diagnostics = {
   "diagnostics",
   sources = { "nvim_diagnostic" },
-  sections = { "error", "warn" },
-  symbols = { error = icons.diagnostics.Error, warn = icons.diagnostics.Warn },
-  colored = true,
-  always_visible = true,
-}
-
-local diff = {
-  "diff",
-  colored = false,
-  symbols = { added = icons.git.added, modified = icons.git.changed, removed = icons.git.deleted },
-  cond = hide_in_width,
+  symbols = {
+    error = icons.diagnostics.Error,
+    warn = icons.diagnostics.Warn,
+    info = icons.diagnostics.Info,
+    hint = icons.diagnostics.Hint,
+  },
 }
 
 local filetype = {
   "filetype",
-  icons_enabled = false,
+  icon_only = true,
+  separator = "",
+  padding = { left = 1, right = 0 },
+}
+
+local filename = {
+  "filename",
+  path = 1,
+  symbols = { modified = "  ", readonly = "", unnamed = "" },
 }
 
 local location = {
   "location",
   padding = 0,
 }
+
+local progress = { "progress", separator = " ", padding = { left = 1, right = 1 } }
 
 local spaces = function()
   return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
@@ -40,17 +41,14 @@ lualine.setup {
     globalstatus = true,
     icons_enabled = true,
     theme = "auto",
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
     disabled_filetypes = { "alpha", "dashboard" },
-    always_divide_middle = true,
   },
   sections = {
     lualine_a = { "mode" },
     lualine_b = { "branch" },
-    lualine_c = { diagnostics },
-    lualine_x = { diff, spaces, "encoding", filetype },
+    lualine_c = { diagnostics, filetype, filename },
+    lualine_x = { spaces, "encoding" },
     lualine_y = { location },
-    lualine_z = { "progress" },
+    lualine_z = { progress },
   },
 }
