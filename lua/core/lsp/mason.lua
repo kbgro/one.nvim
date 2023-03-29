@@ -10,7 +10,9 @@ local servers = {
   },
   bashls = {},
   jsonls = {},
-  yamlls = {},
+  yamlls = {
+    yaml = { keyOdering = false }
+  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
