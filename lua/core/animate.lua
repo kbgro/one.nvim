@@ -27,6 +27,8 @@ local opts = function()
         end,
       },
     },
+    close = { enable = false },
+    open = { enable = false },
   }
 end
 

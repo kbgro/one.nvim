@@ -1,9 +1,12 @@
+--
 require "core.keymaps"
 require "core.options"
 require "core.plugins"
 require "core.lsp"
 require "core.treesitter"
+require "core.scheme"
 require "core.bufferline"
+require "core.blank"
 require "core.cmp"
 require "core.nvim-tree"
 require "core.comment"

@@ -13,6 +13,9 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {}
 local plugins = {
+  -- colorscheme
+  { "folke/tokyonight.nvim", priority = 1000 },
+
   -- Git related plugins
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
@@ -37,6 +40,7 @@ local plugins = {
     },
   },
 
+  { "folke/neodev.nvim" },
   {
     -- Autocompletion
     "hrsh7th/nvim-cmp",
@@ -48,14 +52,14 @@ local plugins = {
 
   { "lewis6991/gitsigns.nvim" },
 
-  {
-    -- Theme inspired by Atom
-    "navarasu/onedark.nvim",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme "onedark"
-    end,
-  },
+  -- {
+  --   -- Theme inspired by Atom
+  --   "navarasu/onedark.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme "onedark"
+  --   end,
+  -- },
 
   {
     "nvim-lualine/lualine.nvim",
@@ -63,14 +67,7 @@ local plugins = {
   },
 
   {
-    -- Add indentation guides even on blank lines
     "lukas-reineke/indent-blankline.nvim",
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    opts = {
-      char = "┊",
-      show_trailing_blankline_indent = false,
-    },
   },
 
   -- "gc" to comment visual regions/lines
@@ -130,12 +127,10 @@ local plugins = {
 
   {
     "mfussenegger/nvim-dap",
-    dependencies = {
-      "rcarriga/nvim-dap-ui",
-      "williamboman/mason.nvim",
-      "jay-babu/mason-nvim-dap.nvim",
-      "leoluz/nvim-dap-go",
-    },
+    "rcarriga/nvim-dap-ui",
+    "williamboman/mason.nvim",
+    "jay-babu/mason-nvim-dap.nvim",
+    "leoluz/nvim-dap-go",
   },
 
   {
