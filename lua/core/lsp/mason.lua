@@ -11,7 +11,7 @@ local servers = {
   bashls = {},
   jsonls = {},
   yamlls = {
-    yaml = { keyOdering = false }
+    yaml = { keyOdering = false },
   },
   lua_ls = {
     Lua = {
@@ -61,7 +61,7 @@ local on_attach = function(client, bufnr)
 
   -- See `:help K` for why this keymap
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+  nmap("<leader>gs", vim.lsp.buf.signature_help, "Signature Documentation")
 
   -- Lesser used LSP functionality
   nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")

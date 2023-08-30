@@ -52,14 +52,15 @@ local plugins = {
 
   { "lewis6991/gitsigns.nvim" },
 
-  -- {
-  --   -- Theme inspired by Atom
-  --   "navarasu/onedark.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme "onedark"
-  --   end,
-  -- },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+  },
 
   {
     "nvim-lualine/lualine.nvim",
@@ -123,16 +124,6 @@ local plugins = {
 
   { "ahmedkhalf/project.nvim" },
 
-  { "akinsho/toggleterm.nvim" },
-
-  {
-    "mfussenegger/nvim-dap",
-    "rcarriga/nvim-dap-ui",
-    "williamboman/mason.nvim",
-    "jay-babu/mason-nvim-dap.nvim",
-    "leoluz/nvim-dap-go",
-  },
-
   {
     "L3MON4D3/LuaSnip",
     -- install jsregexp (optional!).
@@ -160,25 +151,13 @@ local plugins = {
     end,
   },
 
-  -- better text-objects
+  -- rails
   {
-    "echasnovski/mini.ai",
-    -- keys = {
-    --   { "a", mode = { "x", "o" } },
-    --   { "i", mode = { "x", "o" } },
-    -- },
-    event = "VeryLazy",
-    dependencies = { "nvim-treesitter-textobjects" },
-    config = function()
-      require("mini.ai").setup(opts)
-      -- register all text objects with which-key
-    end,
+    "tpope/vim-rails",
   },
 
-  -- animate
   {
-    "echasnovski/mini.animate",
-    event = "VeryLazy",
+    "vimwiki/vimwiki",
   },
 }
 

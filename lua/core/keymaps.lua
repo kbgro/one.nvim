@@ -59,7 +59,7 @@ vim.keymap.set("v", ">", ">gv", opts)
 -- Plugins --
 
 -- NvimTree
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+vim.keymap.set("n", "<leader>e", ":Neotree<CR>", opts)
 
 -- Telescope
 vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", opts)
