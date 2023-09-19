@@ -1,4 +1,4 @@
-# SINK NVIM
+# One NVIM
 
 # Custom PDE
 
