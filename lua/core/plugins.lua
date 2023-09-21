@@ -11,7 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {}
 local plugins = {
   -- colorscheme
   { "folke/tokyonight.nvim", priority = 1000 },
@@ -31,10 +30,6 @@ local plugins = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
 
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { "j-hui/fidget.nvim", opts = {} },
-
       -- Additional lua configuration, makes nvim stuff amazing!
       "folke/neodev.nvim",
     },
@@ -53,13 +48,12 @@ local plugins = {
   { "lewis6991/gitsigns.nvim" },
 
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
+      "nvim-tree/nvim-web-devicons",
+    }
   },
 
   {

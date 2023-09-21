@@ -1,9 +1,7 @@
 local nvim_tree = require "nvim-tree"
-local nvim_tree_config = require "nvim-tree.config"
 local icons = require "core.icons"
 
 local git_icons = icons.git
-local tree_cb = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup {
   sync_root_with_cwd = true,
@@ -42,14 +40,7 @@ nvim_tree.setup {
     },
   },
   view = {
-    width = 30,
+    width = 24,
     side = "right",
-    mappings = {
-      list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = "h", cb = tree_cb "close_node" },
-        { key = "v", cb = tree_cb "vsplit" },
-      },
-    },
   },
 }

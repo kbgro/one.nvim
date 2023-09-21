@@ -10,7 +10,6 @@ require("nvim-treesitter.configs").setup {
     "rust",
     "tsx",
     "typescript",
-    "help",
     "lua",
     "markdown",
     "markdown_inline",

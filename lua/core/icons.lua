@@ -9,11 +9,11 @@ local M = {
     added = "",
     changed = "",
     deleted = "",
-    unstaged = "✗",
+    unstaged = "★",
     staged = "✓",
     unmerged = "",
     renamed = "➜",
-    untracked = "★",
+    untracked = "✗",
     ignored = "◌",
   },
   fs = {
