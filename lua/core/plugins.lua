@@ -61,9 +61,7 @@ local plugins = {
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
-  {
-    "lukas-reineke/indent-blankline.nvim",
-  },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
 
   -- "gc" to comment visual regions/lines
   { "numToStr/Comment.nvim", opts = {} },
