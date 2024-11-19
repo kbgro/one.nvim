@@ -1,33 +1,11 @@
 -- [[ Language Server Protoco LSP Config ]]
 
+local qt = require "core.qt"
+
 vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { desc = "[L]sp [F]ormat" })
 
-function is_qt_project()
-    local filepath = vim.fn.findfile("CMakeLists.txt", ".;")
-    local qt_found = false
-
-    if filepath ~= "" then
-        local file = io.open(filepath, "r")
-        if file == nil then
-            return qt_found
-        end
-
-        for line in file:lines() do
-            if line:match("find_package%(%s*Qt6") then
-                qt_found = true
-                break
-            end
-        end
-
-        if file ~= nil then
-            file:close()
-        end
-    end
-
-    return qt_found
-end
-
 return {
+    { 'rcarriga/nvim-notify' },
     {
         'folke/lazydev.nvim',
         ft = 'lua',
@@ -131,15 +109,13 @@ return {
                 handlers = {
                     function(server_name)
                         local server = servers[server_name] or {}
-                        -- This handles overriding only values explicitly passed
-                        -- by the server configuration above. Useful when disabling
-                        -- certain features of an LSP (for example, turning off formatting for ts_ls)
                         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                        if server_name == "clangd" and is_qt_project() then
-                            -- TODO: generate compile_commands
+                        if server_name == "clangd" and qt.is_qt6_project() then
+                            qt.nofity("Upgrading clangd to Qt6")
                             server.cmd = {
                                 "/opt/Qt/Tools/QtCreator/libexec/qtcreator/clang/bin/clangd"
                             }
+                            qt.setup {}
                         end
                         require('lspconfig')[server_name].setup(server)
                     end,
