@@ -10,6 +10,8 @@ vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.breakindent = true
 vim.opt.undofile = true
+vim.opt.undolevels = 10000
+vim.opt.updatetime = 10000
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.list = true
@@ -21,6 +23,29 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.fillchars = {
+    foldopen = "",
+    foldclose = "",
+    fold = " ",
+    foldsep = " ",
+    diff = "╱",
+    eob = " ",
+}
+vim.opt.foldlevel = 99
+vim.opt.formatoptions = "jcroqlnt" -- tcqj
+vim.opt.grepformat = "%f:%l:%c:%m"
+vim.opt.grepprg = "rg --vimgrep"
+vim.opt.ignorecase = true      -- Ignore case
+vim.opt.inccommand = "nosplit" -- preview incremental substitute
+vim.opt.jumpoptions = "view"
+vim.opt.completeopt = "menu,menuone,noselect"
+
+if vim.fn.has("nvim-0.10") == 1 then
+    vim.opt.smoothscroll = true
+    vim.opt.foldexpr = "v:lua.require'core.editor'.foldexpr()"
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldtext = ""
+end
 
 -- [[ Mapping ]]
 vim.keymap.set("v", "p", '"_dP', { desc = "Better Paste" })
@@ -78,12 +103,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- [[ resize splits if window got resized ]]
 local resize_group = vim.api.nvim_create_augroup('ResizeSplit', { clear = true })
 vim.api.nvim_create_autocmd({ "VimResized" }, {
-  group = resize_group,
-  callback = function()
-    local current_tab = vim.fn.tabpagenr()
-    vim.cmd("tabdo wincmd =")
-    vim.cmd("tabnext " .. current_tab)
-  end,
+    group = resize_group,
+    callback = function()
+        local current_tab = vim.fn.tabpagenr()
+        vim.cmd("tabdo wincmd =")
+        vim.cmd("tabnext " .. current_tab)
+    end,
 })
 
 -- [[ Plugins ]]

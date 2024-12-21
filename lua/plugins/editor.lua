@@ -48,6 +48,11 @@ local lualine_theme = {
 
 return {
     {
+        -- cpp
+        'eriks47/generate.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
+    {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
@@ -71,6 +76,19 @@ return {
         end
     },
 
+    {
+        'windwp/nvim-ts-autotag',
+        config = function()
+            require("nvim-ts-autotag").setup {
+                opts = {
+                    enable_close = true,          -- Auto close tags
+                    enable_rename = true,         -- Auto rename pairs of tags
+                    enable_close_on_slash = false -- Auto close on trailing </
+                }
+            }
+        end
+    },
+
     { -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
@@ -78,7 +96,7 @@ return {
         -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
         opts = {
             -- Add languages to be installed here that you want installed for treesitter
-            ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'dart' },
+            ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'dart', "html", "xml", "yaml", "json", "cmake", "css"},
 
             -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
             auto_install = false,
