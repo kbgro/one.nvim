@@ -1,30 +1,5 @@
-local pipe_icon = '▌'
 
 return {
-    {
-        "folke/tokyonight.nvim",
-        priority = 1000,
-        lazy = true,
-        opts = {
-            transparent = true,
-            styles = {
-                floats = "transparent",
-                sidebars = "transparent",
-            },
-            on_colors = function(colors)
-                local git_color = { add = "#28a745", change = "#007bff", delete = "#dc3545" }
-                colors.git = git_color
-                colors.gitSigns = git_color
-            end
-        },
-        init = function()
-            vim.cmd.colorscheme 'tokyonight-night'
-        end
-    },
-
-    {
-        "lewis6991/gitsigns.nvim",
-        opts = {
             signs = {
                 add = { text = pipe_icon },
                 change = { text = pipe_icon },
@@ -76,6 +51,7 @@ return {
                 map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
             end,
-        },
-    }
+
 }
+
+

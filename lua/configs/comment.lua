@@ -1,13 +1,7 @@
--- Comment
 vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
 vim.keymap.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts)
 
-return { 
-    "numToStr/Comment.nvim",
-    opts = {} ,
-    config = function () 
-        local comment = require "Comment"
-        comment.setup {
+return {
           ---@return string | nil commentstring If found, otherwise `nil`
           pre_hook = function(ctx)
             -- Only calculate commentstring for tsx filetypes
@@ -29,6 +23,5 @@ return {
             end
             return nil
           end,
-        }
-    end
+
 }
