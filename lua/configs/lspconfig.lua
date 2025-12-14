@@ -45,12 +45,14 @@ M.capabilities.textDocument.completion.completionItem = {
 }
 
 M.defaults = function()
+  -- Attach keymaps when LSP attaches
   vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
       M.on_attach(event)
     end,
   })
 
+  -- Custom settings for lua_ls
   local lua_lsp_settings = {
     Lua = {
       runtime = { version = "LuaJIT" },
@@ -64,18 +66,36 @@ M.defaults = function()
     },
   }
 
-  if vim.lsp.config then
-    vim.lsp.config("*", { capabilities = M.capabilities, on_init = M.on_init })
-    vim.lsp.config("lua_ls", { settings = lua_lsp_settings })
-    vim.lsp.config("ts_ls", { settings = {}})
-    vim.lsp.enable "lua_ls"
-    vim.lsp.enable "ts_ls"
-  else
-    require("lspconfig").lua_ls.setup {
+  -- Load mason-lspconfig safely
+  local ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+  if not ok then
+    vim.notify("mason-lspconfig not loaded", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Setup Mason with automatic installation of servers
+  mason_lspconfig.setup({
+    automatic_installation = true,
+  })
+
+  -- Get all servers installed via Mason
+  local installed_servers = mason_lspconfig.get_installed_servers()
+
+  for _, server_name in ipairs(installed_servers) do
+    local opts = {
       capabilities = M.capabilities,
+      on_attach = M.on_attach,
       on_init = M.on_init,
-      settings = lua_lsp_settings,
+      settings = {},
     }
+
+    -- Apply custom settings for lua_ls
+    if server_name == "lua_ls" then
+      opts.settings = lua_lsp_settings
+    end
+
+    -- Enable the server
+    vim.lsp.enable(server_name, opts)
   end
 end
 

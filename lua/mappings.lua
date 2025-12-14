@@ -40,3 +40,10 @@ vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+
+-- source
+vim.keymap.set("n", "<leader>rr", function()
+  vim.cmd("source $MYVIMRC")
+  print("Neovim config reloaded")
+end, { desc = "Reload Neovim config" })
+
