@@ -16,5 +16,6 @@ return {
     end,
     on_highlights = function(hl, c)
         hl.CursorLine = { bg = "#010b17" }
+        hl.StatusLine = { bg = "none" }
     end
 }

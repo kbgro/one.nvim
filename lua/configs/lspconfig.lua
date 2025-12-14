@@ -67,7 +67,9 @@ M.defaults = function()
   if vim.lsp.config then
     vim.lsp.config("*", { capabilities = M.capabilities, on_init = M.on_init })
     vim.lsp.config("lua_ls", { settings = lua_lsp_settings })
+    vim.lsp.config("ts_ls", { settings = {}})
     vim.lsp.enable "lua_ls"
+    vim.lsp.enable "ts_ls"
   else
     require("lspconfig").lua_ls.setup {
       capabilities = M.capabilities,

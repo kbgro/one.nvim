@@ -43,51 +43,6 @@ local lualine_theme = {
         c = { fg = colors.fg_gutter },
     },
 }
-local colors = {
-    bg_dark   = "#1f2335",
-    magenta   = "#bb9af7",
-    fg_dark   = '#a9b1d6',
-    fg_gutter = "#bd93f9",
-    blue      = '#7aa2f7',
-    gray      = '#44475a',
-    lightgray = '#5f6a8e',
-    orange    = '#ffb86c',
-    purple    = '#bd93f9',
-    red       = '#ff5555',
-    yellow    = '#f1fa8c',
-    green     = '#50fa7b',
-    white     = '#f8f8f2',
-    black     = '#282a36',
-}
-
-local lualine_theme = {
-    normal = {
-        a = { fg = colors.blue, gui = 'bold' },
-        b = { fg = colors.purple },
-        c = { fg = colors.fg_dark, gui = 'italic' },
-    },
-    insert = {
-        a = { fg = colors.green, gui = 'bold' },
-        b = { fg = colors.fg_gutter },
-    },
-    visual = {
-        a = { fg = colors.magenta, gui = 'bold' },
-        b = { fg = colors.fg_gutter },
-    },
-    replace = {
-        a = { fg = colors.red, gui = 'bold' },
-        b = { fg = colors.fg_gutter },
-    },
-    command = {
-        a = { fg = colors.yellow, gui = 'bold' },
-        b = { fg = colors.fg_gutter },
-    },
-    inactive = {
-        a = { fg = colors.blue },
-        b = { fg = colors.fg_gutter, gui = "bold" },
-        c = { fg = colors.fg_gutter },
-    },
-}
 
 M = {
     options = {
