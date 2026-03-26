@@ -1,102 +1,109 @@
+-- =====================================================================================
+-- LSP Configuration
+-- =====================================================================================
+
 local M = {}
 
-vim.keymap.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { desc = "[L]sp [F]ormat" })
-
+-- ======================
+-- 🔑 Keymaps
+-- ======================
 M.on_attach = function(event)
-    local map = function(keys, func, desc, mode)
-        mode = mode or 'n'
-        vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-    end
-
-  map("gD", vim.lsp.buf.declaration, "Go to declaration")
-  map("gd", vim.lsp.buf.definition, "Go to definition")
-  map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
-  map("<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder", {'n'})
-  map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder", {'n'})
-  map("<leader>wl", function()print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end, "List workspace folders", {'n'})
-  map("<leader>D", vim.lsp.buf.type_definition, "Go to type definition", {'n'})
-end
-
-M.on_init = function(client, _)
-  if client.supports_method "textDocument/semanticTokens" then
-    client.server_capabilities.semanticTokensProvider = nil
+  local map = function(keys, func, desc, mode)
+    mode = mode or 'n'
+    vim.keymap.set(mode, keys, func, {
+      buffer = event.buf,
+      desc = 'LSP: ' .. desc,
+    })
   end
+
+  map('gD', vim.lsp.buf.declaration, 'Go to declaration')
+  map('gd', vim.lsp.buf.definition, 'Go to definition')
+  map('gI', vim.lsp.buf.implementation, 'Go to implementation')
+  map('<leader>D', vim.lsp.buf.type_definition, 'Type definition')
+
+  map('<leader>rn', vim.lsp.buf.rename, 'Rename')
+  map('<leader>ca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
+
+  map('K', vim.lsp.buf.hover, 'Hover docs')
+  map('<leader>lf', function()
+    vim.lsp.buf.format { async = true }
+  end, 'Format file')
 end
 
+-- ======================
+-- ⚙️ Capabilities
+-- ======================
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-M.capabilities.textDocument.completion.completionItem = {
-  documentationFormat = { "markdown", "plaintext" },
-  snippetSupport = true,
-  preselectSupport = true,
-  insertReplaceSupport = true,
-  labelDetailsSupport = true,
-  deprecatedSupport = true,
-  commitCharactersSupport = true,
-  tagSupport = { valueSet = { 1 } },
-  resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  },
-}
+local ok_cmp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+if ok_cmp then
+  M.capabilities = cmp_lsp.default_capabilities(M.capabilities)
+end
 
+-- ======================
+-- 🚀 Setup
+-- ======================
 M.defaults = function()
-  -- Attach keymaps when LSP attaches
-  vim.api.nvim_create_autocmd("LspAttach", {
+  -- ✅ Keymaps via LspAttach
+  vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(event)
       M.on_attach(event)
     end,
   })
 
-  -- Custom settings for lua_ls
-  local lua_lsp_settings = {
-    Lua = {
-      runtime = { version = "LuaJIT" },
-      workspace = {
-        library = {
-          vim.fn.expand "$VIMRUNTIME/lua",
-          vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
-          "${3rd}/luv/library",
-        },
-      },
+  -- ✅ Mason
+  require('mason').setup()
+
+  require('mason-lspconfig').setup {
+    ensure_installed = {
+      'lua_ls',
+      'pyright',
+      'ts_ls',
+      'bashls',
+      'jsonls',
     },
   }
 
-  -- Load mason-lspconfig safely
-  local ok, mason_lspconfig = pcall(require, "mason-lspconfig")
-  if not ok then
-    vim.notify("mason-lspconfig not loaded", vim.log.levels.ERROR)
-    return
-  end
+  -- ======================
+  -- 🧠 Native LSP configs
+  -- ======================
 
-  -- Setup Mason with automatic installation of servers
-  mason_lspconfig.setup({
-    automatic_installation = true,
+  -- Lua
+  vim.lsp.config('lua_ls', {
+    capabilities = M.capabilities,
+    settings = {
+      Lua = {
+        runtime = { version = 'LuaJIT' },
+        diagnostics = { globals = { 'vim' } },
+        workspace = {
+          library = {
+            vim.fn.expand '$VIMRUNTIME/lua',
+            vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
+          },
+        },
+      },
+    },
   })
 
-  -- Get all servers installed via Mason
-  local installed_servers = mason_lspconfig.get_installed_servers()
+  -- Other servers (simple setup)
+  local servers = { 'pyright', 'ts_ls', 'bashls', 'jsonls' }
 
-  for _, server_name in ipairs(installed_servers) do
-    local opts = {
+  for _, server in ipairs(servers) do
+    vim.lsp.config(server, {
       capabilities = M.capabilities,
-      on_attach = M.on_attach,
-      on_init = M.on_init,
-      settings = {},
-    }
-
-    -- Apply custom settings for lua_ls
-    if server_name == "lua_ls" then
-      opts.settings = lua_lsp_settings
-    end
-
-    -- Enable the server
-    vim.lsp.enable(server_name, opts)
+    })
   end
+
+  -- ======================
+  -- 🚀 Enable all servers
+  -- ======================
+  vim.lsp.enable {
+    'lua_ls',
+    'pyright',
+    'ts_ls',
+    'bashls',
+    'jsonls',
+  }
 end
 
 return M

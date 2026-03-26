@@ -11,10 +11,10 @@ M.opts = {
 
         mappings = {
             i = {
-                ["<Down>"] = actions.cycle_history_next,
-                ["<Up>"] = actions.cycle_history_prev,
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
+                ["<C-j>"] = actions.cycle_history_next,
+                ["<C-k>"] = actions.cycle_history_prev,
+                ["<Down>"] = actions.move_selection_next,
+                ["<Up>"] = actions.move_selection_previous,
             },
         },
     },

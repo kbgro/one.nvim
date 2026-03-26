@@ -1,4 +1,3 @@
-
 vim.keymap.set("v", "p", '"_dP', { desc = "Better Paste" })
 
 vim.keymap.set("v", "<", "<gv")

@@ -1,3 +1,7 @@
+-- =====================================================================================
+-- Status Line
+-- =====================================================================================
+
 local colors = {
   bg_dark = '#1f2335',
   magenta = '#bb9af7',
@@ -21,37 +25,24 @@ local lualine_theme = {
     b = { fg = colors.purple },
     c = { fg = colors.fg_dark, gui = 'italic' },
   },
-  insert = {
-    a = { fg = colors.green, gui = 'bold' },
-    b = { fg = colors.fg_gutter },
-  },
-  visual = {
-    a = { fg = colors.magenta, gui = 'bold' },
-    b = { fg = colors.fg_gutter },
-  },
-  replace = {
-    a = { fg = colors.red, gui = 'bold' },
-    b = { fg = colors.fg_gutter },
-  },
-  command = {
-    a = { fg = colors.yellow, gui = 'bold' },
-    b = { fg = colors.fg_gutter },
-  },
-  inactive = {
-    a = { fg = colors.blue },
-    b = { fg = colors.fg_gutter, gui = 'bold' },
-    c = { fg = colors.fg_gutter },
-  },
+  insert = { a = { fg = colors.green, gui = 'bold' }, b = { fg = colors.fg_gutter } },
+  visual = { a = { fg = colors.magenta, gui = 'bold' }, b = { fg = colors.fg_gutter } },
+  replace = { a = { fg = colors.red, gui = 'bold' }, b = { fg = colors.fg_gutter } },
+  command = { a = { fg = colors.yellow, gui = 'bold' }, b = { fg = colors.fg_gutter } },
+  inactive = { a = { fg = colors.blue }, b = { fg = colors.fg_gutter, gui = 'bold' }, c = { fg = colors.fg_gutter } },
 }
 
 local function lsp_servers()
-  local clients = vim.lsp.get_active_clients { bufnr = 0 }
-  if #clients == 0 then
-    return 'No LSP'
-  end
+  local buf = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients { bufnr = buf } -- ✅ new way
   local names = {}
+
   for _, client in ipairs(clients) do
     table.insert(names, client.name)
+  end
+
+  if #names == 0 then
+    return 'No LSP'
   end
   return '  ' .. table.concat(names, ', ')
 end
@@ -68,7 +59,7 @@ M = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = { 'filename' },
-    lualine_x = { 'encoding', 'fileformat', 'filetype', { lsp_servers, color = { fg = colors.green, gui = "bold" }} },
+    lualine_x = { 'encoding', 'fileformat', 'filetype', { lsp_servers, color = { fg = colors.green, gui = 'bold' } } },
     lualine_y = { 'progress' },
     lualine_z = { 'location' },
   },

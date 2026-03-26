@@ -1,8 +1,11 @@
---
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
+-- =====================================================================================
+-- Project Folder
+-- =====================================================================================
+
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle File Explorer' })
 
 return {
-filters = { dotfiles = false },
+  filters = { dotfiles = false },
   disable_netrw = true,
   hijack_cursor = true,
   sync_root_with_cwd = true,
@@ -12,7 +15,7 @@ filters = { dotfiles = false },
   },
   view = {
     width = 30,
-    side = "right",
+    side = 'right',
     preserve_window_proportions = true,
   },
   renderer = {
@@ -21,15 +24,15 @@ filters = { dotfiles = false },
     indent_markers = { enable = true },
     icons = {
       glyphs = {
-        default = "󰈚",
+        default = '󰈚',
         folder = {
-          default = "",
-          empty = "",
-          empty_open = "",
-          open = "",
-          symlink = "",
+          default = '',
+          empty = '',
+          empty_open = '',
+          open = '',
+          symlink = '',
         },
-        git = { unmerged = "" },
+        git = { unmerged = '' },
       },
     },
   },
